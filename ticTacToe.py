@@ -51,8 +51,9 @@ def best_choice(array):
             print 'FINAL SCORE ' + str(finalScores[i]) + ' index: ' + str(i)
             copy[i] = ""
 
+    #FIXTHIS - need to keep track of which locations can be chosen by ai
     for i in range(0,9):
-        if array[i] != "":
+        if array[i] = "":
             finalScores[i] = -1
 
     print finalScores

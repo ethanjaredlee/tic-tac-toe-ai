@@ -59,11 +59,5 @@ class TicTacToeTests(unittest.TestCase):
         self.assertEqual(best_choice(testBoard4), 5)
 
 
-
-
-
-
-
-
 if __name__ == '__main__':
     unittest.main()
