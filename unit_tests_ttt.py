@@ -12,7 +12,7 @@ class TicTacToeTests(unittest.TestCase):
         testBoard2 = ["x", "", "", "o", "o", "o", "x", "x", "o"]
         self.assertEqual(winner(testBoard2), "o")
 
-        testBoard3 = ["x", "", "o", "o", "o", "", "x", "x", "x"]
+        testBoard3 = ["x", "", "o", "o", "o", " ", "x", "x", "x"]
         self.assertEqual(winner(testBoard3), "x")
 
     def test_scoring(self):
@@ -55,6 +55,8 @@ class TicTacToeTests(unittest.TestCase):
 
         '''
 
+        testBoard4 = ["x", "", "", "o", "o", "", "x", "x", ""]
+        self.assertEqual(best_choice(testBoard4), 5)
 
 
 

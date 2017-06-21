@@ -40,7 +40,6 @@ def scoring(array):
     else:
         return 0
 
-
 def best_choice(array):
     copy = array[:]
     finalScores = [0] * 9
@@ -52,25 +51,28 @@ def best_choice(array):
             print 'FINAL SCORE ' + str(finalScores[i]) + ' index: ' + str(i)
             copy[i] = ""
 
-    print finalScores
+    for i in range(0,9):
+        if array[i] != "":
+            finalScores[i] = -1
 
+    print finalScores
     return finalScores.index(max(finalScores))
 
 def best_choice_helper(array, score, turn):
     # recurses and finds the score of each more in best_choice
 
     if check_full(array):
-        print 'score (full): ' + str(scoring(array) + score)
-        print 'I RETURNED THE RIGHT THING (full board)'
+        #print 'score (full): ' + str(scoring(array) + score)
+        #print 'I RETURNED THE RIGHT THING (full board)'
         return int(scoring(array) + score)
 
     if scoring(array) != 0:
-        print 'score (winner) ' + str(scoring(array) + score)
-        print 'I RETURNED THE RIGHT THING (early win)'
+        #print 'score (winner) ' + str(scoring(array) + score)
+        #print 'I RETURNED THE RIGHT THING (early win)'
         return int(scoring(array) + score)
 
     copy = array[:]
-    print 'copy: ' + str(copy)
+    #print 'copy: ' + str(copy)
     savedTurn = turn
 
     # check whose turn it is
@@ -78,24 +80,73 @@ def best_choice_helper(array, score, turn):
 
         for i in range(0,9):
             if copy[i] == "":
-                print 'ai turn: ' + str(i)
+                #print 'ai turn: ' + str(i)
                 copy[i] = "o"
-                score = score + best_choice_helper(copy, score, turn + 1)
+                score = max([score, best_choice_helper(copy, score, turn + 1)])
                 copy[i] = ""
 
     if (savedTurn % 2 == 1): # opponent turn
         for i in range(0,9):
             if copy[i] == "":
-                print 'opp turn: ' + str(i)
+                #print 'opp turn: ' + str(i)
                 copy[i] = "x"
-                score = score + best_choice_helper(copy, score, turn + 1)
+                score = min([score, best_choice_helper(copy, score, turn + 1)])
                 copy[i] = ""
 
-    print 'returned score: ' + str(scoring(array) + score)
+    #print 'returned score: ' + str(scoring(array) + score)
     return scoring(array) + score
 
 
-def draw_board():
-    pieces = ["" for i in range(0,9)]
 
-#best_choice(["x", "o", "x", "o", "o", "", "x", "x", "o"])
+def draw_board(pieces):
+
+    copy = pieces[:]
+    for i in range(0,9):
+        if copy[i] == "":
+            copy[i] = " "
+
+    for i in range(0, 3):
+        print "| " + copy[3*i] + " | " + copy[3*i+1] + " | " + copy [3*i+2] + " |"
+
+def main():
+
+    pieces = [""] * 9
+
+    while True:
+
+        draw_board(pieces)
+
+        playerMove = int(raw_input("Enter a position: "))
+        pieces[playerMove] = "x"
+
+        if check_full(pieces) and scoring(pieces) == -10:
+            print "player wins!"
+            draw_board(pieces)
+            break
+
+        if check_full(pieces) and scoring(pieces) == 0:
+            print "tie game!"
+            draw_board(pieces)
+            break
+
+        draw_board(pieces)
+
+        print 'hello ' + str(pieces)
+        aiMove = best_choice(pieces)
+        print 'why ' + str(aiMove)
+        pieces[aiMove] = "o"
+
+        if check_full(pieces) and scoring(pieces) == 10:
+            print "ai wins!"
+            draw_board(pieces)
+            break
+
+        if check_full(pieces) and scoring(pieces) == 0:
+            print "tie game!"
+            draw_board(pieces)
+            break
+
+        print pieces
+
+if __name__ == '__main__':
+    main()
