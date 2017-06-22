@@ -4,6 +4,10 @@ Quick notation:
     * 0 + n*2 stands for ai turn
     * 1 + n*2 stands for opponent turn
 
+Future development:
+    * don't let players choose a move that's already been taken
+    * create a more graphical game -- not just playing in command line
+    * simplify into a one-move helper
 '''
 
 #IMPROVE THIS
